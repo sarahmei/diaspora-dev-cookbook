@@ -3,3 +3,4 @@ cookbook_paths:
 recipes:
 - xcode::default
 - homebrew::default
+- rvm::default

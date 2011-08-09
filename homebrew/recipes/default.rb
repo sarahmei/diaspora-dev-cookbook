@@ -1,13 +1,6 @@
-directory "/usr/local/bin" do
-  owner WS_USER
-  recursive true
-end
+WS_USER = ENV['SUDO_USER'].strip
 
-execute "your current user owns /usr/local" do
-  command "chown -R #{WS_USER} /usr/local"
-end
-
-homebrew_git_revision_hash  = version_string_for("homebrew")
+homebrew_git_revision_hash  = "2abfba1a91bfda3017d23a631ef237933e29c2f5"
 
 if (`which brew`.empty?)
   git "/tmp/homebrew" do
@@ -21,6 +14,16 @@ if (`which brew`.empty?)
   execute "Copying homebrew's .git to /usr/local" do
     command "rsync -axSH /tmp/homebrew/ /usr/local/"
     user WS_USER
+  end
+
+  directory "/usr/local/Cellar" do
+    owner WS_USER
+    recursive true
+  end
+
+  directory "/usr/local/Library" do
+    owner WS_USER
+    recursive true
   end
 end
 
